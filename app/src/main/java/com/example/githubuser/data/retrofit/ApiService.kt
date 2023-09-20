@@ -11,7 +11,6 @@ interface ApiService {
     @GET("search/users")
     @Headers("Authorization: token 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")
     fun findUser(
-        @Path("username") username: String,
         @Query("uname") uname:String,
     ): Call<SearchUserResponse>
 }
