@@ -26,12 +26,12 @@
             android:textStyle="bold"
             tools:text="@tools:sample/full_names" />
         <TextView
-            android:id="@+id/username"
+            android:id="@+id/linkUrl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/profileImage"
             android:layout_below="@+id/fullName"
             android:textSize="15sp"
-            tools:text="@tools:sample/full_names" />
+            tools:text="@tools:sample/lorem" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
