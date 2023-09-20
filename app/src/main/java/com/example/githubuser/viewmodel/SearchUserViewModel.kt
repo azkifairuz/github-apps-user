@@ -22,13 +22,16 @@ class SearchUserViewModel : ViewModel() {
     private var _listUser = MutableLiveData<List<ItemsItem>>()
     val listUser: LiveData<List<ItemsItem>> = _listUser
 
+    init {
+        searchUser("azki")
+    }
     fun onSearchChange(text: String) {
         _searchText.value = text
     }
 
     fun searchUser(username: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().findUser("azki")
+        val client = ApiConfig.getApiService().findUser(username)
         client.enqueue(object : Callback<SearchUserResponse> {
             override fun onResponse(
                 call: Call<SearchUserResponse>,
