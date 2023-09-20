@@ -16,4 +16,8 @@ class SearchUserViewModel:ViewModel() {
     private var _listUser = MutableLiveData<List<ItemsItem>>()
     val listUser:LiveData<List<ItemsItem>> = _listUser
 
+    fun onSearchChange(text:String){
+        _searchText.value = text
+    }
+
 }
