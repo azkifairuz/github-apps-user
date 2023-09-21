@@ -12,10 +12,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class SearchUserViewModel : ViewModel() {
-
-    private var _searchText = MutableLiveData<String>()
-    val searchText: LiveData<String> = _searchText
-
     private var _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -23,10 +19,7 @@ class SearchUserViewModel : ViewModel() {
     val listUser: LiveData<List<ItemsItem>> = _listUser
 
     init {
-        searchUser("azki")
-    }
-    fun onSearchChange(text: String) {
-        _searchText.value = text
+        searchUser("a")
     }
 
     fun searchUser(username: String) {

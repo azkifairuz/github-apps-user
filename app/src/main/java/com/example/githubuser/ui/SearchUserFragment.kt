@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubuser.R
 import com.example.githubuser.adapter.SearchUserAdapter
+import com.example.githubuser.data.response.ItemsItem
 import com.example.githubuser.databinding.FragmentSearchUserBinding
 import com.example.githubuser.viewmodel.SearchUserViewModel
 
 class SearchUserFragment : Fragment() {
     private lateinit var searchRv: RecyclerView
-    private lateinit var searchUserAdapter: SearchUserAdapter
     private lateinit var binding: FragmentSearchUserBinding
+    private lateinit var arrayList: ArrayList<ItemsItem>
     private val searchViewModel by viewModels<SearchUserViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,20 +31,32 @@ class SearchUserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         searchRv = binding.rvUser
+        arrayList = ArrayList()
+        searchRv.adapter = SearchUserAdapter(requireActivity(), arrayList)
         searchRv.layoutManager = LinearLayoutManager(context)
 
-
-        val searchUserViewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        ).get(SearchUserViewModel::class.java)
-
-        searchUserViewModel.isLoading.observe(requireActivity()) {isLoading ->
+        searchViewModel.isLoading.observe(requireActivity()) { isLoading ->
             showLoading(isLoading)
         }
-        searchUserViewModel.listUser.observe(requireActivity()) {listUser ->
-            binding.rvUser.adapter =
-                SearchUserAdapter(requireActivity(),listUser)
+
+        searchViewModel.listUser.observe(requireActivity()) { listUser ->
+            arrayList.clear()
+            arrayList.addAll(listUser)
+            searchRv.visibility = View.VISIBLE
+            searchRv.adapter?.notifyDataSetChanged()
+        }
+
+        with(binding){
+            svUser.setupWithSearchBar(sbUser)
+            svUser
+                .editText
+                .setOnEditorActionListener { _, _, _ ->
+                    sbUser.text = svUser.text
+                    svUser.hide()
+                    searchViewModel.searchUser(svUser.text.toString())
+
+                    false
+                }
         }
     }
     private fun showLoading(isLoading: Boolean) {
