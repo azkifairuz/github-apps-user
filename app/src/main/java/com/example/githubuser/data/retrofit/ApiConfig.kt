@@ -1,5 +1,6 @@
 package com.example.githubuser.data.retrofit
 
+import com.example.githubuser.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -9,12 +10,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ApiConfig {
     companion object{
         fun getApiService():ApiService {
+            val myToken = BuildConfig.MY_TOKEN
             val loggingInterceptor = Interceptor {chain ->
                 val req = chain.request()
                 val requestHeaders = req.newBuilder()
                     .addHeader(
                         "Authorization" ,
-                        "token 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"
+                        "token $myToken"
                     )
                     .build()
                 chain.proceed(requestHeaders)
