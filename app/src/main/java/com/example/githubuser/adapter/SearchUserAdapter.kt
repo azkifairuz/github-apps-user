@@ -21,7 +21,6 @@ class SearchUserAdapter(private val context: Context, private var listUser: List
     class ListViewHolder(itemView: ItemUserBinding) : RecyclerView.ViewHolder(itemView.root) {
         val imageProfil = itemView.profileImage
         val fullName = itemView.fullName
-        val linkProfile = itemView.linkUrl
         val cardView = itemView.cardView
     }
 
@@ -40,13 +39,6 @@ class SearchUserAdapter(private val context: Context, private var listUser: List
             listUser[position].avatarUrl
         )
         holder.fullName.text = listUser[position].login
-        holder.linkProfile.text = listUser[position].htmlUrl
-        holder.linkProfile.setOnClickListener {
-            context.startActivity(
-                Intent
-                    (Intent.ACTION_VIEW, Uri.parse(holder.linkProfile.text.toString()))
-            )
-        }
         holder.cardView.setOnClickListener {
             toDetailCallback.onItemClicked(listUser[position])
         }

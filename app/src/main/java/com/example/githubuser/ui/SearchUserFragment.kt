@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +16,7 @@ import com.example.githubuser.data.response.ItemsItem
 import com.example.githubuser.databinding.FragmentSearchUserBinding
 import com.example.githubuser.viewmodel.SearchUserViewModel
 
-class SearchUserFragment : Fragment() {
+class SearchUserFragment : Fragment(), SearchUserAdapter.ToDetailCallback {
     private lateinit var searchRv: RecyclerView
     private lateinit var binding: FragmentSearchUserBinding
     private lateinit var arrayList: ArrayList<ItemsItem>
@@ -24,7 +25,7 @@ class SearchUserFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSearchUserBinding.inflate(inflater,container,false)
+        binding = FragmentSearchUserBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -32,7 +33,9 @@ class SearchUserFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         searchRv = binding.rvUser
         arrayList = ArrayList()
-        searchRv.adapter = SearchUserAdapter(requireActivity(), arrayList)
+        val adapter = SearchUserAdapter(requireActivity(), arrayList)
+        adapter.setToDetailCallback(this)
+        searchRv.adapter = adapter
         searchRv.layoutManager = LinearLayoutManager(context)
 
         searchViewModel.isLoading.observe(requireActivity()) { isLoading ->
@@ -46,7 +49,7 @@ class SearchUserFragment : Fragment() {
             searchRv.adapter?.notifyDataSetChanged()
         }
 
-        with(binding){
+        with(binding) {
             svUser.setupWithSearchBar(sbUser)
             svUser
                 .editText
@@ -59,6 +62,25 @@ class SearchUserFragment : Fragment() {
                 }
         }
     }
+
+    override fun onItemClicked(user: ItemsItem) {
+        val bundle = Bundle()
+        bundle.putString(DetailUserFragment.EXTRA_USERNAME, user.login)
+        Toast.makeText(requireContext(), user.login, Toast.LENGTH_SHORT).show()
+        val detailFragment = DetailUserFragment()
+        detailFragment.arguments = bundle
+        val fragmentManager = parentFragmentManager
+        fragmentManager.beginTransaction().apply {
+            replace(
+                R.id.frame_container,
+                detailFragment,
+                DetailUserFragment::class.java.simpleName
+            )
+            addToBackStack(null)
+            commit()
+        }
+    }
+
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }

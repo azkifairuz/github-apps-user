@@ -3,4 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="mau_cari_siapa">Mau cari siapa?</string>
+    <string name="followers_count">%d Followers</string>
+    <string name="following_count">%d Following</string>
+
 </resources>

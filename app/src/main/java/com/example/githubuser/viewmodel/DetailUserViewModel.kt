@@ -26,11 +26,13 @@ class DetailUserViewModel:ViewModel() {
                 response: Response<DetailUserResponse>
             ) {
                 _isLoading.value = false
-                if (!response.isSuccessful){
-                    Log.e("isFailed Get User", " ${response.message()}")
-                    return
+                if (response.isSuccessful){
+                    _detailUser.value = response.body()
+                }else{
+
+                    Log.e("isFailed Get User", " ${response.body()}")
                 }
-                _detailUser.value = response.body()
+
             }
 
             override fun onFailure(call: Call<DetailUserResponse>, t: Throwable) {
