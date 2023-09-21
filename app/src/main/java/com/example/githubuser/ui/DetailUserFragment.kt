@@ -32,11 +32,16 @@ class DetailUserFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            profileImage.load(EXTRA_IMAGE)
-            tvFullName.text = EXTRA_FULLNAME
-            tvUsername.text = EXTRA_USERNAME
-            tvFollowers.text = EXTRA_FOLOWERS
-            tvFollowing.text = EXTRA_FOLOWINGS
+            if (arguments != null){
+                profileImage.load(
+                    arguments?.getString(EXTRA_IMAGE)
+                )
+                tvFullName.text =  arguments?.getString(EXTRA_FULLNAME)
+                tvUsername.text =   arguments?.getString(EXTRA_USERNAME)
+                tvFollowers.text =  arguments?.getString(EXTRA_FOLOWERS)
+                tvFollowing.text =  arguments?.getString(EXTRA_FOLOWINGS)
+            }
+
         }
     }
 
