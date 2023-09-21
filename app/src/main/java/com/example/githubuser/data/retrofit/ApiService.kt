@@ -1,5 +1,6 @@
 package com.example.githubuser.data.retrofit
 
+import com.example.githubuser.data.response.DetailUserResponse
 import com.example.githubuser.data.response.SearchUserResponse
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -13,4 +14,6 @@ interface ApiService {
         @Query("q") uname:String,
     ): Call<SearchUserResponse>
 
+    @GET("users/{username}")
+    fun getDetailUser(@Path("username") username: String): Call<DetailUserResponse>
 }
