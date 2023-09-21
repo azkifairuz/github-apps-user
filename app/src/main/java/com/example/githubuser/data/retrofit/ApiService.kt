@@ -12,4 +12,5 @@ interface ApiService {
     fun findUser(
         @Query("q") uname:String,
     ): Call<SearchUserResponse>
+
 }
