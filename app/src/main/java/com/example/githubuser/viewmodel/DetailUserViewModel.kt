@@ -69,9 +69,32 @@ class DetailUserViewModel:ViewModel() {
                     Log.e("isFailed Get User", " ${response.body()}")
                 }
             }
-
             override fun onFailure(call: Call<List<ItemsItem>>, t: Throwable) {
-                TODO("Not yet implemented")
+                _isLoadingFollow.value = false
+                Log.e("isFailed Get User", " ${t.message.toString()}")
+            }
+
+        })
+    }
+    fun getFollowingList(username: String) {
+        _isLoadingFollow.value = true
+        val client = ApiConfig.getApiService().getFollowingList(username)
+        client.enqueue(object :Callback<List<ItemsItem>> {
+            override fun onResponse(
+                call: Call<List<ItemsItem>>,
+                response: Response<List<ItemsItem>>
+            ) {
+                _isLoadingFollow.value = false
+                if (response.isSuccessful){
+                    _followingList.value = response.body()
+                }else{
+
+                    Log.e("isFailed Get User", " ${response.body()}")
+                }
+            }
+            override fun onFailure(call: Call<List<ItemsItem>>, t: Throwable) {
+                _isLoadingFollow.value = false
+                Log.e("isFailed Get User", " ${t.message.toString()}")
             }
 
         })
