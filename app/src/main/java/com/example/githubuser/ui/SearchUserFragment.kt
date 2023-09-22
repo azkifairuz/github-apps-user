@@ -65,7 +65,6 @@ class SearchUserFragment : Fragment(), SearchUserAdapter.ToDetailCallback {
     override fun onItemClicked(user: ItemsItem) {
         val bundle = Bundle()
         bundle.putString(DetailUserFragment.EXTRA_USERNAME, user.login)
-        Toast.makeText(requireContext(), user.login, Toast.LENGTH_SHORT).show()
         val detailFragment = DetailUserFragment()
         detailFragment.arguments = bundle
         val fragmentManager = parentFragmentManager

@@ -88,7 +88,6 @@ class DetailUserViewModel:ViewModel() {
                 if (response.isSuccessful){
                     _followingList.value = response.body()
                 }else{
-
                     Log.e("isFailed Get User", " ${response.body()}")
                 }
             }
@@ -96,7 +95,6 @@ class DetailUserViewModel:ViewModel() {
                 _isLoadingFollow.value = false
                 Log.e("isFailed Get User", " ${t.message.toString()}")
             }
-
         })
     }
 

@@ -19,7 +19,7 @@ class SearchUserViewModel : ViewModel() {
     val listUser: LiveData<List<ItemsItem>> = _listUser
 
     init {
-        searchUser("a")
+        searchUser("azkif")
     }
 
     fun searchUser(username: String) {
