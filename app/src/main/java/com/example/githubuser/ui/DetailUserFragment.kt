@@ -42,6 +42,7 @@ class DetailUserFragment : Fragment() {
                 tvUsername.text =  user.login
                tvFollowing.text =  getString(R.string.following_count,user.following)
                 tvFollowers.text = getString(R.string.followers_count,user.followers)
+                tvBio.text = user.bio
             }
         }
     }
