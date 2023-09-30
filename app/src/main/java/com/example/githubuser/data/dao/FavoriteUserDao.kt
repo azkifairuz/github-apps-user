@@ -10,5 +10,6 @@ interface FavoriteUserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(favUser: FavoriteUser)
 
-
+    @Query("SELECT * from favorite_user ORDER BY id ASC ")
+    fun getAllFavUser(): LiveData<List<FavoriteUser>>
 }
