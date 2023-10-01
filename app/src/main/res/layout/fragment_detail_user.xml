@@ -104,4 +104,5 @@
         android:src="@drawable/ic_favorite"
         app:elevation="6dp"
         app:fabSize="normal" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

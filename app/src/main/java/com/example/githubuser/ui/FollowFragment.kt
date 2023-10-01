@@ -12,10 +12,10 @@ import com.example.githubuser.adapter.SearchUserAdapter
 import com.example.githubuser.data.response.ItemsItem
 import com.example.githubuser.databinding.FragmentFollowBinding
 import com.example.githubuser.viewmodel.DetailUserViewModel
+import com.example.githubuser.viewmodelFactory.DetailUserViewModelFactory
 
 class FollowFragment : Fragment(), SearchUserAdapter.ToDetailCallback {
     private lateinit var binding: FragmentFollowBinding
-    private val detailViewmodel by viewModels<DetailUserViewModel>()
     companion object {
         const val ARG_POSITION = "index_position"
         const val ARG_USERNAME = "username"
@@ -33,6 +33,12 @@ class FollowFragment : Fragment(), SearchUserAdapter.ToDetailCallback {
         super.onViewCreated(view, savedInstanceState)
         val indexPosition = arguments?.getInt(ARG_POSITION, 0)!!
         val userName = arguments?.getString(ARG_USERNAME) ?: "empty"
+        val factory: DetailUserViewModelFactory =
+            DetailUserViewModelFactory.getInstance(requireActivity())
+        factory.setUsername(userName)
+        val detailViewmodel: DetailUserViewModel by viewModels {
+            factory
+        }
         detailViewmodel.getFollowersList(userName)
         detailViewmodel.getFollowingList(userName)
         with(binding){

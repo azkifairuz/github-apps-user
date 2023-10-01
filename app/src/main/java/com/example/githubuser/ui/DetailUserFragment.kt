@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import coil.load
@@ -20,6 +21,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailUserFragment : Fragment() {
     private lateinit var binding: FragmentDetailUserBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,14 +34,12 @@ class DetailUserFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val username = arguments?.getString(EXTRA_USERNAME) ?: ""
-        val daoInstance = FavUserDb.getInstance(requireActivity()).favUserDao()
+        val factory: DetailUserViewModelFactory =
+            DetailUserViewModelFactory.getInstance(requireActivity())
+        factory.setUsername(username)
         val detailViewmodel: DetailUserViewModel by viewModels {
-            DetailUserViewModelFactory(
-                username = requireArguments().getString(EXTRA_USERNAME) ?: "",
-                usersRepository = FavUserRepository.getInstance(daoInstance)
-            )
+            factory
         }
-
         detailViewmodel.getDetailuser(username)
 
         detailViewmodel.isLoading.observe(requireActivity()) { isLoading ->
@@ -66,11 +66,13 @@ class DetailUserFragment : Fragment() {
                     )
                     fab.setImageDrawable(drawable)
                     fab.setOnClickListener {
-                        FavoriteUser(
-                            id = arguments?.getInt(EXTRA_ID) ?: 0,
-                            username = username,
-                            avatarUrl = arguments?.getString(EXTRA_IMAGE_URL)
-                        )
+                       detailViewmodel.addFav(
+                           FavoriteUser(
+                               id = arguments?.getInt(EXTRA_ID) ?: 0,
+                               username = username,
+                               avatarUrl = arguments?.getString(EXTRA_IMAGE_URL)
+                           )
+                       )
                     }
                 } else {
                     val drawable = ContextCompat.getDrawable(

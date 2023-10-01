@@ -1,9 +1,12 @@
 package com.example.githubuser.data
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import com.example.githubuser.data.db.FavUserDb
 import com.example.githubuser.data.repository.FavUserRepository
-import java.util.prefs.Preferences
+import com.example.githubuser.setting.SettingPreference
+
 
 object Injection {
     fun provideRepository(context: Context): FavUserRepository {
@@ -12,7 +15,7 @@ object Injection {
         return FavUserRepository.getInstance(favUserDao = dao)
     }
 
-//    fun provideThemeSetting(dataStore: DataStore<Preferences>): SettingPreferences {
-//        return SettingPreferences.getInstance(dataStore)
-//    }
+    fun provideThemeSetting(dataStore: DataStore<Preferences>): SettingPreference {
+        return SettingPreference.getInstance(dataStore)
+    }
 }

@@ -29,7 +29,6 @@ class SearchUserAdapter(private val context: Context, private var listUser: List
             LayoutInflater.from(parent.context), parent, false
         )
         return ListViewHolder(binding)
-
     }
 
     override fun getItemCount(): Int = listUser.size

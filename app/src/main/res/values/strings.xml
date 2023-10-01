@@ -5,5 +5,7 @@
     <string name="mau_cari_siapa">Mau cari siapa?</string>
     <string name="followers_count">%d Followers</string>
     <string name="following_count">%d Following</string>
+    <string name="favorite">favorite</string>
+    <string name="change_theme">change theme</string>
 
 </resources>
