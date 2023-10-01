@@ -14,8 +14,8 @@ interface FavoriteUserDao {
 
     @Query("SELECT * from favorite_user ORDER BY id ASC ")
     fun getAllFavUser(): LiveData<List<FavoriteUser>>
-    @Delete
-    fun delete(favUser: FavoriteUser)
+    @Query("DELETE FROM favorite_user WHERE username = :username")
+    fun delete(username: String?)
 
     @Query("SELECT EXISTS(SELECT * FROM favorite_user WHERE username = :username)")
     suspend fun isFavorite(username: String?) : Boolean

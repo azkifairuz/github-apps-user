@@ -20,9 +20,9 @@ class FavUserRepository private constructor(
         }
     }
 
-    suspend fun deleteFav(user: FavoriteUser) {
-        if (isFav(user.username)) {
-            favUserDao.delete(user)
+    suspend fun deleteFav(username: String?) {
+        if (isFav(username = username )) {
+            favUserDao.delete(username)
         } else {
             Log.e("UsersRepository", "User is Not in Favorite!")
         }

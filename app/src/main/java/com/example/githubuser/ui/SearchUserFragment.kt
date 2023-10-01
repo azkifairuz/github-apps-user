@@ -65,6 +65,8 @@ class SearchUserFragment : Fragment(), SearchUserAdapter.ToDetailCallback {
     override fun onItemClicked(user: ItemsItem) {
         val bundle = Bundle()
         bundle.putString(DetailUserFragment.EXTRA_USERNAME, user.login)
+        bundle.putString(DetailUserFragment.EXTRA_IMAGE_URL, user.avatarUrl)
+        bundle.putInt(DetailUserFragment.EXTRA_ID, user.id)
         val detailFragment = DetailUserFragment()
         detailFragment.arguments = bundle
         val fragmentManager = parentFragmentManager

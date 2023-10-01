@@ -118,9 +118,9 @@ class DetailUserViewModel(
             usersRepository.addFav(user)
         }
     }
-    fun deleteFav(user: FavoriteUser) {
+    fun deleteFav(username: String?) {
         viewModelScope.launch {
-            usersRepository.deleteFav(user)
+            usersRepository.deleteFav(username)
         }
     }
 
