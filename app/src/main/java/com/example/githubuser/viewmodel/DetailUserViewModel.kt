@@ -4,14 +4,21 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.githubuser.data.entity.FavoriteUser
+import com.example.githubuser.data.repository.FavUserRepository
 import com.example.githubuser.data.response.DetailUserResponse
 import com.example.githubuser.data.response.ItemsItem
 import com.example.githubuser.data.retrofit.ApiConfig
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailUserViewModel:ViewModel() {
+class DetailUserViewModel(
+    private val username: String,
+    private val usersRepository: FavUserRepository,
+):ViewModel() {
     private var _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -27,6 +34,8 @@ class DetailUserViewModel:ViewModel() {
     private var _detailUser = MutableLiveData<DetailUserResponse>()
     val detailUser: LiveData<DetailUserResponse> = _detailUser
 
+    private val _isFavorite = MutableLiveData<Boolean>()
+    val isFavorite: LiveData<Boolean> = _isFavorite
     fun getDetailuser(username:String){
         _isLoading.value = true
         val client = ApiConfig.getApiService().getDetailUser(username)
@@ -96,6 +105,30 @@ class DetailUserViewModel:ViewModel() {
                 Log.e("isFailed Get User", " ${t.message.toString()}")
             }
         })
+    }
+
+    fun isFav() {
+        viewModelScope.launch {
+            _isFavorite.value = usersRepository.isFav(username)
+        }
+    }
+
+    fun addFav(user: FavoriteUser) {
+        viewModelScope.launch {
+            usersRepository.addFav(user)
+        }
+    }
+    fun deleteFav(user: FavoriteUser) {
+        viewModelScope.launch {
+            usersRepository.deleteFav(user)
+        }
+    }
+
+    init {
+        isFav()
+        getDetailuser(username)
+        getFollowersList(username)
+        getFollowingList(username)
     }
 
 }
