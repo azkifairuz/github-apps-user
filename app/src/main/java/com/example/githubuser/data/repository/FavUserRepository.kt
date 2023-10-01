@@ -1,7 +1,6 @@
 package com.example.githubuser.data.repository
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import com.example.githubuser.data.dao.FavoriteUserDao
 import com.example.githubuser.data.entity.FavoriteUser
