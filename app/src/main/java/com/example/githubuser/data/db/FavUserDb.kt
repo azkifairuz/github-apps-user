@@ -19,7 +19,7 @@ abstract class FavUserDb: RoomDatabase() {
             instance ?: synchronized(this){
                 instance ?: Room.databaseBuilder(
                     context.applicationContext,
-                    FavUserDb::class.java,"favorite_user"
+                    FavUserDb::class.java,"favorite_user_db"
                 ).build()
             }
     }
