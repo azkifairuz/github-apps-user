@@ -10,5 +10,6 @@
     <string name="favorite_user">Favorite User</string>
     <string name="favorite_kosong">Favorite Kosong</string>
     <string name="user_tidak_ada">User Tidak Ada</string>
+    <string name="image">image</string>
 
 </resources>
