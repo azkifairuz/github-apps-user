@@ -12,7 +12,7 @@ interface FavoriteUserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(favUser: FavoriteUser)
 
-    @Query("SELECT * from favorite_user ORDER BY id ASC ")
+    @Query("SELECT * from favorite_user")
     fun getAllFavUser(): LiveData<List<FavoriteUser>>
     @Query("DELETE FROM favorite_user WHERE username = :username")
     fun delete(username: String?)

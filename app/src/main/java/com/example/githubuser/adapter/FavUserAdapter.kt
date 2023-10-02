@@ -1,22 +1,21 @@
 package com.example.githubuser.adapter
 
 import android.content.Context
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.githubuser.data.entity.FavoriteUser
 import com.example.githubuser.data.response.ItemsItem
 import com.example.githubuser.databinding.ItemFollowersUserBinding
-import com.example.githubuser.databinding.ItemUserBinding
+import com.example.githubuser.ui.DetailUserFragment
 
-class FollowersAdapter(private val context: Context, private var listUser: List<ItemsItem>) :
-    RecyclerView.Adapter<FollowersAdapter.ListViewHolder>() {
-    private lateinit var toDetailCallback: ToDetailCallback
-
-
-    fun setToDetailCallback(toDetailCallback: ToDetailCallback){
-        this.toDetailCallback = toDetailCallback
-    }
+class FavUserAdapter(private var listUser: List<FavoriteUser>,
+                     private val onCLick:(user: FavoriteUser) -> Unit,
+                     private val onDelete:(username: String) -> Unit) :
+    RecyclerView.Adapter<FavUserAdapter.ListViewHolder>() {
     class ListViewHolder(itemView: ItemFollowersUserBinding) : RecyclerView.ViewHolder(itemView.root) {
         val imageProfil = itemView.profileImage
         val fullName = itemView.fullName
@@ -34,20 +33,17 @@ class FollowersAdapter(private val context: Context, private var listUser: List<
     override fun getItemCount(): Int = listUser.size
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
+
         holder.imageProfil.load(
             listUser[position].avatarUrl
         )
-        holder.fullName.text = listUser[position].login
+        holder.fullName.text = listUser[position].username
         holder.cardView.setOnClickListener {
-            toDetailCallback.onItemClicked(listUser[position])
+            onCLick(listUser[position])
         }
         holder.btnDelete.setOnClickListener{
-
+            onDelete(listUser[position].username?:"")
         }
 
     }
-    interface ToDetailCallback {
-        fun onItemClicked(user: ItemsItem)
-    }
-
 }

@@ -8,5 +8,7 @@
     <string name="favorite">favorite</string>
     <string name="change_theme">change theme</string>
     <string name="favorite_user">Favorite User</string>
+    <string name="favorite_kosong">Favorite Kosong</string>
+    <string name="user_tidak_ada">User Tidak Ada</string>
 
 </resources>

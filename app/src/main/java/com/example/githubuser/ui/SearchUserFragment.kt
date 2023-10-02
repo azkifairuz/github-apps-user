@@ -23,6 +23,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubuser.R
+import com.example.githubuser.adapter.FavUserAdapter
 import com.example.githubuser.adapter.SearchUserAdapter
 import com.example.githubuser.data.response.ItemsItem
 import com.example.githubuser.databinding.FragmentSearchUserBinding
@@ -79,9 +80,16 @@ class SearchUserFragment : Fragment(), SearchUserAdapter.ToDetailCallback {
 
         searchViewModel.listUser.observe(requireActivity()) { listUser ->
             arrayList.clear()
-            arrayList.addAll(listUser)
-            searchRv.visibility = View.VISIBLE
-            searchRv.adapter?.notifyDataSetChanged()
+            if (listUser.isEmpty()){
+                searchRv.visibility = View.GONE
+                binding.userNotFound.visibility = View.VISIBLE
+            }else{
+                arrayList.addAll(listUser)
+                searchRv.visibility = View.VISIBLE
+                binding.userNotFound.visibility = View.GONE
+                searchRv.adapter?.notifyDataSetChanged()
+            }
+
         }
 
         with(binding) {
