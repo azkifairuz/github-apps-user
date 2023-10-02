@@ -7,5 +7,6 @@
     <string name="following_count">%d Following</string>
     <string name="favorite">favorite</string>
     <string name="change_theme">change theme</string>
+    <string name="favorite_user">Favorite User</string>
 
 </resources>
