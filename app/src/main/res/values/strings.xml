@@ -11,5 +11,8 @@
     <string name="favorite_kosong">Favorite Kosong</string>
     <string name="user_tidak_ada">User Tidak Ada</string>
     <string name="image">image</string>
+    <string name="kosong">kosong</string>
+    <string name="tidak_ada_followers">Tidak Ada Followers</string>
+    <string name="tidak_ada_following">Tidak Ada Following</string>
 
 </resources>

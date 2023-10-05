@@ -16,6 +16,7 @@ import com.example.githubuser.viewmodelFactory.DetailUserViewModelFactory
 
 class FollowFragment : Fragment(), SearchUserAdapter.ToDetailCallback {
     private lateinit var binding: FragmentFollowBinding
+
     companion object {
         const val ARG_POSITION = "index_position"
         const val ARG_USERNAME = "username"
@@ -25,7 +26,7 @@ class FollowFragment : Fragment(), SearchUserAdapter.ToDetailCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentFollowBinding.inflate(layoutInflater,container,false)
+        binding = FragmentFollowBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -41,27 +42,28 @@ class FollowFragment : Fragment(), SearchUserAdapter.ToDetailCallback {
         }
         detailViewmodel.getFollowersList(userName)
         detailViewmodel.getFollowingList(userName)
-        with(binding){
-            detailViewmodel.isLoadingFollow.observe(requireActivity()) {isLoading->
+        with(binding) {
+            detailViewmodel.isLoadingFollow.observe(requireActivity()) { isLoading ->
                 showLoading(isLoading)
             }
             rvFollow.layoutManager = LinearLayoutManager(requireActivity())
-           when(indexPosition){
-               1->{
-                   detailViewmodel.followerList.observe(requireActivity()){
-                       val adapter = SearchUserAdapter(requireActivity(), it)
-                       rvFollow.adapter = adapter
-                       adapter.setToDetailCallback(this@FollowFragment)
-                   }
-               }
-               2->{
-                   detailViewmodel.followingList.observe(requireActivity()){
-                       val adapter = SearchUserAdapter(requireActivity(), it)
-                       rvFollow.adapter = adapter
-                       adapter.setToDetailCallback(this@FollowFragment)
-                   }
-               }
-           }
+            when (indexPosition) {
+                1 -> {
+                    detailViewmodel.followerList.observe(requireActivity()) {
+                        val adapter = SearchUserAdapter(requireActivity(), it)
+                        rvFollow.adapter = adapter
+                        adapter.setToDetailCallback(this@FollowFragment)
+                    }
+                }
+
+                2 -> {
+                    detailViewmodel.followingList.observe(requireActivity()) {
+                        val adapter = SearchUserAdapter(requireActivity(), it)
+                        rvFollow.adapter = adapter
+                        adapter.setToDetailCallback(this@FollowFragment)
+                    }
+                }
+            }
 
         }
 
